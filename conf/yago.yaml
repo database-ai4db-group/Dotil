@@ -1,0 +1,44 @@
+version: v2
+description: yago
+clientSettings:
+  concurrency: 10 # number of graph clients
+  channelBufferSize: 128
+  space: yago
+  connection:
+    user: root
+    password: nebula
+    address: 127.0.0.1:3699
+logPath: ./err/yago.log
+files:
+  - path: ./yago_node.csv
+    failDataPath: ./err/vertex.csv
+    batchSize: 100
+    type: csv
+    csv:
+      withHeader: false
+      withLabel: false
+      delimiter: "\t"
+    schema:
+      type: vertex
+      vertex:
+        tags:
+          - name: node
+            props:
+              - name: name
+                type: string
+  - path: ./yago_relation.csv
+    failDataPath: ./err/edge.csv
+    batchSize: 100
+    type: csv
+    csv:
+      withHeader: false
+      withLabel: false
+      delimiter: "\t"
+    schema:
+      type: edge
+      edge:
+        name: relation
+        withRanking: false
+        props:
+          - name: name
+            type: string
